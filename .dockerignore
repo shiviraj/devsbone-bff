@@ -1,0 +1,19 @@
+.npmrc
+.dockerignore
+.gitignore
+.talismanrc
+.prettierrc
+.env.local
+
+babel.config.js
+Dockerfile
+jest.config.js
+README.md
+
+helm/
+pipelines/
+__tests__/
+coverage/
+
+# Ignoring this package because of TwistLock vulnerability issue: Private keys stored in this lib
+node_modules/public-encrypt

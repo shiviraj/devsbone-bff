@@ -17,4 +17,4 @@ const warn = (...message) => {
   console.warn('Warn:', ...formatMessage(message))
 }
 
-module.exports = {info, error, warn}
+module.exports = { info, error, warn }

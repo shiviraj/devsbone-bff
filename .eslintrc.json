@@ -285,13 +285,6 @@
         "no-console": "off"
       }
     },
-    {
-      "files": [
-        "src/websocket.js"
-      ],
-      "rules": {
-        "no-magic-numbers": "off"
-      }
-    }
+
   ]
 }

@@ -1,14 +1,14 @@
 const express = require('express')
 const logger = require('../service/logger')
-const {ErrorCode, DD606, ResponseCode} = require('../config/error')
-const OauthService = require('../service/OauthService')
-const UserService = require("../service/UserService");
+const { ErrorCode, DD606, ResponseCode } = require('../config/error')
+const OauthService = require('../service/oauthService')
+const UserService = require('../service/userService')
 
 const oauthController = () => {
   const router = express.Router()
   
   router.get('/client-id', (req, res) => {
-    console.log("request")
+    console.log('request')
     OauthService.getClientId()
       .then((response) => {
         logger.info('Successfully get response for oauth client id')
@@ -23,6 +23,7 @@ const oauthController = () => {
   router.post('/code', (req, res) => {
     OauthService.signIn(req.body)
       .then((response) => {
+        console.log(response)
         logger.info('Successfully get response for oauth client id')
         if (!response.data) {
           res.status(ErrorCode['401']).send(response.data)
@@ -31,7 +32,8 @@ const oauthController = () => {
         res.send(response.data)
       })
       .catch((error) => {
-        logger.error(error)
+        console.log('error')
+        // logger.error(error)
         res.status(error.statusCode).send(error.response)
       })
   })

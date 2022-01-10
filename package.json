@@ -13,15 +13,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
+    "cloudinary": "^1.28.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-http-context": "^1.2.4",
-    "nodemailer": "^6.7.2",
-    "ws": "^8.2.3"
+    "express": "^5.0.0-alpha.8",
+    "multer": "^1.4.4",
+    "npm": "^8.3.0",
+    "serverless": "^3.0.0-pre.fc4619a7",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "nodemon": "^2.0.12"
+    "eslint": "^8.6.0",
+    "nodemon": "^2.0.15"
   }
 }

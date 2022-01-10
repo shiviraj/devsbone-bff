@@ -1,7 +1,7 @@
 const express = require('express')
 const logger = require('../service/logger')
 const {DD607, DD608, ResponseCode, DD609, DD611} = require('../config/error')
-const UserService = require('../service/UserService')
+const UserService = require('../service/userService')
 
 const userController = () => {
   const router = express.Router()

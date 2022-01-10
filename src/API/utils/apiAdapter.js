@@ -1,9 +1,9 @@
 const axios = require('axios')
-const httpContext = require('express-http-context')
+const httpContext = require('../../utils/httpContext')
 
 const addHeaders = (req) => {
   const headersToPass = httpContext.get('headers')
-  req.headers = {...headersToPass, ...req.headers}
+  req.headers = { ...headersToPass, ...req.headers }
 }
 
 const addRequestStartedAtHeader = (req) => {
@@ -18,11 +18,12 @@ const addResponseTimeHeader = (res) => {
 }
 
 const apiAdapter = (baseURL) => {
-  const api = axios.create({baseURL})
+  const api = axios.create({ baseURL })
   
   api.interceptors.request.use((request) => {
     addHeaders(request)
     addRequestStartedAtHeader(request)
+    
     return request
   })
   

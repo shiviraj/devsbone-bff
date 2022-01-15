@@ -19,6 +19,15 @@ const PostService = {
   },
   getMyPostsCount() {
     return API.get(`${BASE_PATH}/my-posts/count`)
+  },
+  getPublishedPost(postUrl) {
+    return API.get(`${BASE_PATH}/published/${postUrl}`)
+  },
+  getPublishedPostComments(postId) {
+    return API.get(`${BASE_PATH}/comments/${postId}`)
+  },
+  addComment(postId, comment) {
+    return API.post(`${BASE_PATH}/comments/${postId}`, comment)
   }
 }
 

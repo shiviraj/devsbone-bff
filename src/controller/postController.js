@@ -7,7 +7,7 @@ const PageService = require('../service/pageService')
 const postController = () => {
   const router = express.Router()
   
-  router.post('', (req, res) => {
+  router.post('/author', (req, res) => {
     PostService.addNewPost()
       .then((response) => {
         logger.info('Successfully added new post', response.data.postId)
@@ -19,7 +19,7 @@ const postController = () => {
       })
   })
   
-  router.get('/:postId', (req, res) => {
+  router.get('/author/:postId', (req, res) => {
     PostService.getPost(req.params.postId)
       .then((response) => {
         logger.info('successfully get post', response.data.postId)
@@ -31,7 +31,7 @@ const postController = () => {
       })
   })
   
-  router.put('/:postId', (req, res) => {
+  router.put('/author/:postId', (req, res) => {
     PostService.updatePost(req.params.postId, req.body)
       .then((response) => {
         logger.info('Successfully updated post', response.data.postId)
@@ -43,7 +43,7 @@ const postController = () => {
       })
   })
   
-  router.get('/my-posts/page/:page/limit/:limit', (req, res) => {
+  router.get('/author/my-posts/page/:page/limit/:limit', (req, res) => {
     PostService.getMyPosts(req.params.page, req.params.limit)
       .then((response) => {
         logger.info('Successfully updated post', response.data.length)
@@ -55,10 +55,46 @@ const postController = () => {
       })
   })
   
-  router.get('/my-posts/count', (req, res) => {
+  router.get('/author/my-posts/count', (req, res) => {
     PostService.getMyPostsCount()
       .then((response) => {
         logger.info('Successfully updated post', response.data)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
+  
+  router.get('/:postUrl', (req, res) => {
+    PostService.getPublishedPost(req.params.postUrl)
+      .then((response) => {
+        logger.info('successfully get post', response.data.postId)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
+  
+  router.get('/:postId/comments', (req, res) => {
+    PostService.getPublishedPostComments(req.params.postId)
+      .then((response) => {
+        logger.info('successfully get post', response.data.postId)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
+  
+  router.post('/:postId/comments', (req, res) => {
+    PostService.addComment(req.params.postId, req.body)
+      .then((response) => {
+        logger.info('successfully get post', response.data.postId)
         return res.send(response.data)
       })
       .catch((error) => {

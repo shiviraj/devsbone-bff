@@ -10,6 +10,9 @@ const CommentService = {
   },
   addComment(postId, comment) {
     return API.post(`${BASE_PATH}/${postId}`, comment)
+  },
+  addLikeOnComment(commentId, commentLikeOrDislikeBody) {
+    return API.put(`${BASE_PATH}/${commentId}`, commentLikeOrDislikeBody)
   }
 }
 

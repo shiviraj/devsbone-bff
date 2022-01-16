@@ -1,6 +1,6 @@
 const express = require('express')
 const logger = require('../service/logger')
-const {DD607, DD608, ResponseCode, DD609, DD611} = require('../config/error')
+const { DD607, DD608, ResponseCode, DD609, DD611 } = require('../config/error')
 const UserService = require('../service/userService')
 
 const userController = () => {
@@ -12,18 +12,6 @@ const userController = () => {
       .catch((error) => {
         logger.error(DD607, error)
         res.sendStatus(ResponseCode.UNAUTHORIZED)
-      })
-  })
-  
-  router.get('', (req, res) => {
-    UserService.getAllUsers()
-      .then((response) => {
-        logger.info('Successfully fetch all users')
-        return res.send(response.data)
-      })
-      .catch((error) => {
-        logger.error(DD611, error)
-        res.status(ResponseCode.BAD_REQUEST).send(DD611)
       })
   })
   
@@ -48,6 +36,18 @@ const userController = () => {
       .catch((error) => {
         logger.error(DD609, error)
         res.status(ResponseCode.BAD_REQUEST).send(DD609)
+      })
+  })
+  
+  router.get('/:userId', (req, res) => {
+    UserService.getUser(req.params.userId)
+      .then((response) => {
+        logger.info('Successfully fetch all users')
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD611, error)
+        res.status(ResponseCode.BAD_REQUEST).send(DD611)
       })
   })
   

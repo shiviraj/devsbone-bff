@@ -7,6 +7,9 @@ const BASE_PATH = `${BACKEND_URL}/tags`
 const TagService = {
   addNewTag(tag) {
     return API.post(BASE_PATH, tag)
+  },
+  getAllTag(tags) {
+    return API.post(`${BASE_PATH}/tags`, tags)
   }
 }
 

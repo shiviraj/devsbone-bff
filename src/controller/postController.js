@@ -2,7 +2,6 @@ const express = require('express')
 const logger = require('../service/logger')
 const { DD600, ResponseCode } = require('../config/error')
 const PostService = require('../service/postService')
-const PageService = require('../service/pageService')
 
 const postController = () => {
   const router = express.Router()

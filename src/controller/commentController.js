@@ -1,15 +1,15 @@
 const express = require('express')
 const logger = require('../service/logger')
 const { DD600, ResponseCode } = require('../config/error')
-const TagService = require('../service/tagService')
+const CommentService = require('../service/commentService')
 
-const TagController = () => {
+const CommentController = () => {
   const router = express.Router()
   
-  router.post('', (req, res) => {
-    TagService.addNewTag(req.body)
+  router.get('/:postId', (req, res) => {
+    CommentService.getAllComments(req.params.postId)
       .then((response) => {
-        logger.info('Successfully added new tag', response.data.tagId)
+        logger.info('Successfully added new tag', response.data.length)
         return res.send(response.data)
       })
       .catch((error) => {
@@ -18,10 +18,10 @@ const TagController = () => {
       })
   })
   
-  router.post('/tags', (req, res) => {
-    TagService.getAllTag(req.body)
+  router.post('/:postId', (req, res) => {
+    CommentService.addComment(req.params.postId, req.body)
       .then((response) => {
-        logger.info('Successfully added new tag', response.data.tagId)
+        logger.info('Successfully added new tag', response.data.commentId)
         return res.send(response.data)
       })
       .catch((error) => {
@@ -29,9 +29,8 @@ const TagController = () => {
         res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
       })
   })
-  
   
   return router
 }
 
-module.exports = TagController()
+module.exports = CommentController()

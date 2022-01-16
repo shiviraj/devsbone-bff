@@ -1,5 +1,5 @@
 const apiAdapter = require('../API/utils/apiAdapter')
-const {BACKEND_URL} = require('../config')
+const { BACKEND_URL } = require('../config')
 
 const API = apiAdapter(BACKEND_URL || 'http://localhost:8080')
 const BASE_PATH = `${BACKEND_URL}/users`
@@ -14,8 +14,8 @@ const UserService = {
   logout() {
     return API.get(`${BASE_PATH}/logout`)
   },
-  getAllUsers() {
-    return API.get(`${BASE_PATH}`)
+  getUser(userId) {
+    return API.get(`${BASE_PATH}/${userId}`)
   }
 }
 

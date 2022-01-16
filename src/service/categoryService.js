@@ -10,6 +10,9 @@ const CategoryService = {
   },
   addNewCategory(category) {
     return API.post(BASE_PATH, category)
+  },
+  getCategories(categories) {
+    return API.post(`${BASE_PATH}/categories`, categories)
   }
 }
 

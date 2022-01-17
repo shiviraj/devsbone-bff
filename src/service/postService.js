@@ -22,6 +22,9 @@ const PostService = {
   },
   getPublishedPost(postUrl) {
     return API.get(`${BASE_PATH}/${postUrl}/published`)
+  },
+  addLikeOrDislike(postId, likeOrDislike) {
+    return API.put(`${BASE_PATH}/${postId}/like-or-dislike`, likeOrDislike)
   }
 }
 

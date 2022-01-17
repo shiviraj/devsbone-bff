@@ -78,10 +78,10 @@ const postController = () => {
       })
   })
   
-  router.get('/:postId/comments', (req, res) => {
-    PostService.getPublishedPostComments(req.params.postId)
+  router.put('/:postId', (req, res) => {
+    PostService.addLikeOrDislike(req.params.postId, req.body)
       .then((response) => {
-        logger.info('successfully get post', response.data.postId)
+        logger.info('Successfully updated post', response.data.postId)
         return res.send(response.data)
       })
       .catch((error) => {
@@ -90,17 +90,6 @@ const postController = () => {
       })
   })
   
-  router.post('/:postId/comments', (req, res) => {
-    PostService.addComment(req.params.postId, req.body)
-      .then((response) => {
-        logger.info('successfully get post', response.data.postId)
-        return res.send(response.data)
-      })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
-  })
   
   return router
 }

@@ -29,6 +29,18 @@ const postController = () => {
         res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
       })
   })
+
+  router.get('/author/:postId/url-available/:url', (req, res) => {
+    PostService.isUrlAvailable(req.params.postId, req.params.url)
+      .then((response) => {
+        logger.info('successfully get post', response.data.postId)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
   
   router.put('/author/:postId', (req, res) => {
     PostService.updatePost(req.params.postId, req.body)

@@ -25,6 +25,9 @@ const PostService = {
   },
   addLikeOrDislike(postId, likeOrDislike) {
     return API.put(`${BASE_PATH}/${postId}/like-or-dislike`, likeOrDislike)
+  },
+  isUrlAvailable(postId, url) {
+    return API.get(`${BASE_PATH}/${postId}/url-available/${url}`)
   }
 }
 

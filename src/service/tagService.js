@@ -10,6 +10,9 @@ const TagService = {
   },
   getAllTag(tags) {
     return API.post(`${BASE_PATH}/tags`, tags)
+  },
+  getTagsByTagName(tagName) {
+    return API.get(`${BASE_PATH}/${tagName}`)
   }
 }
 

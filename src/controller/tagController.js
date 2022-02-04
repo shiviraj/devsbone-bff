@@ -30,6 +30,18 @@ const TagController = () => {
       })
   })
   
+  router.get('/:tagName', (req, res) => {
+    TagService.getTagsByTagName(req.params.tagName)
+      .then((response) => {
+        logger.info('Successfully added new tag', response.data)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
+  
   
   return router
 }

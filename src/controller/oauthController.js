@@ -8,7 +8,6 @@ const oauthController = () => {
   const router = express.Router()
   
   router.get('/client-id', (req, res) => {
-    console.log('request')
     OauthService.getClientId()
       .then((response) => {
         logger.info('Successfully get response for oauth client id')

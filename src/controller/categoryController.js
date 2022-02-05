@@ -42,6 +42,30 @@ const CategoryController = () => {
       })
   })
   
+  router.get('/:categoryUrl/page/:page', (req, res) => {
+    CategoryService.getAllPosts(req.params)
+      .then((response) => {
+        logger.info('Successfully added new post', response.data.postId)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
+  
+  router.get('/:categoryUrl/count', (req, res) => {
+    CategoryService.countAllPosts(req.params.categoryUrl)
+      .then((response) => {
+        logger.info('Successfully added new post', response.data.postId)
+        return res.send(response.data)
+      })
+      .catch((error) => {
+        logger.error(DD600, error)
+        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+      })
+  })
+  
   
   return router
 }

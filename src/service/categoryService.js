@@ -13,6 +13,12 @@ const CategoryService = {
   },
   getCategories(categories) {
     return API.post(`${BASE_PATH}/categories`, categories)
+  },
+  getAllPosts({ page, categoryUrl }) {
+    return API.get(`${BASE_PATH}/${categoryUrl}/posts/page/${page}`)
+  },
+  countAllPosts(categoryUrl) {
+    return API.get(`${BASE_PATH}/${categoryUrl}/posts/count`)
   }
 }
 

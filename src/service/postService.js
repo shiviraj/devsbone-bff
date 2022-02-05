@@ -28,6 +28,12 @@ const PostService = {
   },
   isUrlAvailable(postId, url) {
     return API.get(`${BASE_PATH}/${postId}/url-available/${url}`)
+  },
+  getPublishedPosts(page) {
+    return API.get(`${BASE_PATH}/page/${page}`)
+  },
+  getPostsCount() {
+    return API.get(`${BASE_PATH}/count`)
   }
 }
 

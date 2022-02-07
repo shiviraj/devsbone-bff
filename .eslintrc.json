@@ -69,7 +69,6 @@
     "max-statements": 2,
     "max-statements-per-line": 2,
     "multiline-comment-style": 2,
-    "multiline-ternary": 2,
     "new-parens": 2,
     "no-alert": 2,
     "no-array-constructor": 2,
@@ -216,7 +215,6 @@
     "no-whitespace-before-property": 2,
     "no-with": 2,
     "nonblock-statement-body-position": 2,
-    "object-curly-spacing": 2,
     "object-shorthand": 2,
     "operator-assignment": 2,
     "operator-linebreak": 2,
@@ -277,14 +275,13 @@
       "files": [
         "src/index.js",
         "src/config/*",
-        "src/service/logger.js"
+        "src/logger/logger.js"
       ],
       "rules": {
         "no-process-env": "off",
         "no-magic-numbers": "off",
         "no-console": "off"
       }
-    },
-
+    }
   ]
 }

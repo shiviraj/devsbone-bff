@@ -1,5 +1,6 @@
 const axios = require('axios')
 const httpContext = require('../../utils/httpContext')
+const logger = require('../../logger/logger')
 
 const addHeaders = (req) => {
   const headersToPass = httpContext.get('headers')
@@ -23,12 +24,13 @@ const apiAdapter = (baseURL) => {
   api.interceptors.request.use((request) => {
     addHeaders(request)
     addRequestStartedAtHeader(request)
-    
+    logger.requestInfo(request)
     return request
   })
   
   api.interceptors.response.use((response) => {
     addResponseTimeHeader(response)
+    logger.responseInfo(response)
     return response
   })
   

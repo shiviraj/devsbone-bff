@@ -1,17 +1,27 @@
 const express = require('express')
-const logger = require('../service/logger')
-const { DD607, DD608, ResponseCode, DD609, DD611 } = require('../config/error')
+const logger = require('../logger/logger')
 const UserService = require('../service/userService')
+const { handleError, isUnauthorized } = require('../utils/errorHandlers')
+const { CUSTOM_ERRORS } = require('../config/customErrorCodes')
 
 const userController = () => {
   const router = express.Router()
   
   router.get('/validate', (req, res) => {
     UserService.validate()
-      .then((response) => res.send(response.data))
+      .then(({ data }) => res.send(data))
       .catch((error) => {
-        logger.error(DD607, error)
-        res.sendStatus(ResponseCode.UNAUTHORIZED)
+        if (isUnauthorized(error)) {
+          UserService.getDummyUser()
+            .then(({ data }) => res.status(CUSTOM_ERRORS.UNAUTHORIZED.statusCode).send(data))
+            .catch((err) => {
+              logger.error(err, 'Failed to get dummy')
+              handleError(err, res)
+            })
+        } else {
+          logger.error(error, 'Failed to validate user')
+          handleError(error, res)
+        }
       })
   })
   

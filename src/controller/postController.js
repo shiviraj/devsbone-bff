@@ -1,20 +1,17 @@
 const express = require('express')
-const logger = require('../service/logger')
-const { DD600, ResponseCode } = require('../config/error')
+const logger = require('../logger/logger')
 const PostService = require('../service/postService')
+const { handleError } = require('../utils/errorHandlers')
 
 const postController = () => {
   const router = express.Router()
   
   router.post('/author', (req, res) => {
     PostService.addNewPost()
-      .then((response) => {
-        logger.info('Successfully added new post', response.data.postId)
-        return res.send(response.data)
-      })
+      .then(({ data }) => res.send(data))
       .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+        logger.error(error)
+        handleError(error, res, 'Failed to add new post')
       })
   })
   
@@ -24,10 +21,13 @@ const postController = () => {
         logger.info('successfully get post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/author/:postId/url-available/:url', (req, res) => {
@@ -36,10 +36,13 @@ const postController = () => {
         logger.info('successfully get post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.put('/author/:postId', (req, res) => {
@@ -48,10 +51,13 @@ const postController = () => {
         logger.info('Successfully updated post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/author/my-posts/page/:page/limit/:limit', (req, res) => {
@@ -60,10 +66,13 @@ const postController = () => {
         logger.info('Successfully updated post', response.data.length)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/author/my-posts/count', (req, res) => {
@@ -72,10 +81,13 @@ const postController = () => {
         logger.info('Successfully updated post', response.data)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/page/:page', (req, res) => {
@@ -84,10 +96,13 @@ const postController = () => {
         logger.info('successfully get post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/count', (req, res) => {
@@ -96,10 +111,13 @@ const postController = () => {
         logger.info('successfully get post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/:postUrl', (req, res) => {
@@ -108,10 +126,13 @@ const postController = () => {
         logger.info('successfully get post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.put('/:postId', (req, res) => {
@@ -120,12 +141,14 @@ const postController = () => {
         logger.info('Successfully updated post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
-  })
   
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
+  })
   
   return router
 }

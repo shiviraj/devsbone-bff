@@ -16,6 +16,9 @@ const UserService = {
   },
   getUser(userId) {
     return API.get(`${BASE_PATH}/${userId}`)
+  },
+  getDummyUser() {
+    return API.get(`${BASE_PATH}/dummy`)
   }
 }
 

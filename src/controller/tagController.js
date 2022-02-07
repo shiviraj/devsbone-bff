@@ -1,6 +1,5 @@
 const express = require('express')
-const logger = require('../service/logger')
-const { DD600, ResponseCode } = require('../config/error')
+const logger = require('../logger/logger')
 const TagService = require('../service/tagService')
 
 const TagController = () => {
@@ -12,10 +11,13 @@ const TagController = () => {
         logger.info('Successfully added new tag', response.data.tagId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.post('/tags', (req, res) => {
@@ -24,10 +26,13 @@ const TagController = () => {
         logger.info('Successfully added new tag', response.data.tagId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/:tagName', (req, res) => {
@@ -36,10 +41,13 @@ const TagController = () => {
         logger.info('Successfully added new tag', response.data)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   

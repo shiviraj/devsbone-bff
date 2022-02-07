@@ -1,6 +1,5 @@
 const express = require('express')
-const logger = require('../service/logger')
-const { DD600, ResponseCode } = require('../config/error')
+const logger = require('../logger/logger')
 const CategoryService = require('../service/categoryService')
 
 const CategoryController = () => {
@@ -12,10 +11,13 @@ const CategoryController = () => {
         logger.info('Successfully added new post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.post('', (req, res) => {
@@ -24,10 +26,13 @@ const CategoryController = () => {
         logger.info('Successfully added new post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.post('/categories', (req, res) => {
@@ -36,10 +41,13 @@ const CategoryController = () => {
         logger.info('Successfully added new post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/:categoryUrl/page/:page', (req, res) => {
@@ -48,10 +56,13 @@ const CategoryController = () => {
         logger.info('Successfully added new post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   router.get('/:categoryUrl/count', (req, res) => {
@@ -60,10 +71,13 @@ const CategoryController = () => {
         logger.info('Successfully added new post', response.data.postId)
         return res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD600, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD600, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
+     * })
+     */
   })
   
   

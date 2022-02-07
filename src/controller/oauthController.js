@@ -1,8 +1,6 @@
 const express = require('express')
-const logger = require('../service/logger')
-const { ErrorCode, DD606, ResponseCode } = require('../config/error')
+const logger = require('../logger/logger')
 const OauthService = require('../service/oauthService')
-const UserService = require('../service/userService')
 
 const oauthController = () => {
   const router = express.Router()
@@ -13,10 +11,13 @@ const oauthController = () => {
         logger.info('Successfully get response for oauth client id')
         res.send(response.data)
       })
-      .catch((error) => {
-        logger.error(DD606, error)
-        res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD606)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   logger.error(DD606, error)
+     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD606)
+     * })
+     */
   })
   
   router.post('/code', (req, res) => {
@@ -30,11 +31,14 @@ const oauthController = () => {
         }
         res.send(response.data)
       })
-      .catch((error) => {
-        console.log('error')
-        // logger.error(error)
-        res.status(error.statusCode).send(error.response)
-      })
+  
+    /*
+     * .catch((error) => {
+     *   console.log('error')
+     *   // Logger.error(error)
+     *   res.status(error.statusCode).send(error.response)
+     * })
+     */
   })
   
   return router

@@ -1,26 +1,22 @@
 const express = require('express')
 const logger = require('../logger/logger')
 const MediaService = require('../service/mediaService')
+const { handleError } = require('../utils/errorHandlers')
 
 const mediaController = () => {
   const router = express.Router()
   
   router.post('/upload-image/:id', MediaService.validate(), (req, res) => {
     MediaService.upload(req.params.id, req.file)
-      .then((response) => {
-        logger.info('Successfully updated page', req.params.id)
-        res.send({ success: 1, file: { url: response.secure_url } })
+      .then((response) => res.send({ success: 1, file: { url: response.secure_url } }))
+      .catch((error) => {
+        const customError = { message: 'Failed to upload image', id: req.params.id }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send({ success: 0 })
-     * })
-     */
   })
   
-  router.post('/upload-image-byUrl/:id', MediaService.validate(), (req, res) => {
+  router.post('/upload-image-byUrl/:id', (req, res) => {
     res.send({ success: 1, file: { url: req.body.url } })
   })
   return router

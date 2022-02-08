@@ -1,85 +1,62 @@
 const express = require('express')
 const logger = require('../logger/logger')
 const CategoryService = require('../service/categoryService')
+const { handleError } = require('../utils/errorHandlers')
 
 const CategoryController = () => {
   const router = express.Router()
   
   router.get('', (req, res) => {
     CategoryService.getAllCategories()
-      .then((response) => {
-        logger.info('Successfully added new post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch all categories' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.post('', (req, res) => {
     CategoryService.addNewCategory(req.body)
-      .then((response) => {
-        logger.info('Successfully added new post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to add new category' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.post('/categories', (req, res) => {
     CategoryService.getCategories(req.body)
-      .then((response) => {
-        logger.info('Successfully added new post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch categories by category', categories: req.body }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/:categoryUrl/page/:page', (req, res) => {
-    CategoryService.getAllPosts(req.params)
-      .then((response) => {
-        logger.info('Successfully added new post', response.data.postId)
-        return res.send(response.data)
+    const { categoryUrl, page } = req.params
+    CategoryService.getAllPosts(categoryUrl, page)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch all posts by category', categoryUrl, page }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/:categoryUrl/count', (req, res) => {
-    CategoryService.countAllPosts(req.params.categoryUrl)
-      .then((response) => {
-        logger.info('Successfully added new post', response.data.postId)
-        return res.send(response.data)
+    const { categoryUrl } = req.params
+    CategoryService.countAllPosts(categoryUrl)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch the post count by category', categoryUrl }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
-  
   
   return router
 }

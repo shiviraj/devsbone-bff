@@ -1,44 +1,29 @@
 const express = require('express')
 const logger = require('../logger/logger')
 const OauthService = require('../service/oauthService')
+const { handleError } = require('../utils/errorHandlers')
 
 const oauthController = () => {
   const router = express.Router()
   
   router.get('/client-id', (req, res) => {
     OauthService.getClientId()
-      .then((response) => {
-        logger.info('Successfully get response for oauth client id')
-        res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch client Id' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD606, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD606)
-     * })
-     */
   })
   
   router.post('/code', (req, res) => {
     OauthService.signIn(req.body)
-      .then((response) => {
-        console.log(response)
-        logger.info('Successfully get response for oauth client id')
-        if (!response.data) {
-          res.status(ErrorCode['401']).send(response.data)
-          return
-        }
-        res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to login using oauth' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   console.log('error')
-     *   // Logger.error(error)
-     *   res.status(error.statusCode).send(error.response)
-     * })
-     */
   })
   
   return router

@@ -10,144 +10,102 @@ const postController = () => {
     PostService.addNewPost()
       .then(({ data }) => res.send(data))
       .catch((error) => {
-        logger.error(error)
-        handleError(error, res, 'Failed to add new post')
+        const customError = { message: 'Failed to add new post' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
   })
   
   router.get('/author/:postId', (req, res) => {
     PostService.getPost(req.params.postId)
-      .then((response) => {
-        logger.info('successfully get post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to get post of author', postId: req.params.postId }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/author/:postId/url-available/:url', (req, res) => {
-    PostService.isUrlAvailable(req.params.postId, req.params.url)
-      .then((response) => {
-        logger.info('successfully get post', response.data.postId)
-        return res.send(response.data)
+    const { postId, url } = req.params
+    PostService.isUrlAvailable(postId, url)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch the post url availability', postId, url }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.put('/author/:postId', (req, res) => {
     PostService.updatePost(req.params.postId, req.body)
-      .then((response) => {
-        logger.info('Successfully updated post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to update the post', postId: req.params.postId }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/author/my-posts/page/:page/limit/:limit', (req, res) => {
-    PostService.getMyPosts(req.params.page, req.params.limit)
-      .then((response) => {
-        logger.info('Successfully updated post', response.data.length)
-        return res.send(response.data)
+    const { page, limit } = req.params
+    PostService.getMyPosts(page, limit)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch the author\'s posts', page, limit }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/author/my-posts/count', (req, res) => {
     PostService.getMyPostsCount()
-      .then((response) => {
-        logger.info('Successfully updated post', response.data)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch the author\'s post count' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/page/:page', (req, res) => {
     PostService.getPublishedPosts(req.params.page)
-      .then((response) => {
-        logger.info('successfully get post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch posts', page: req.params.page }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/count', (req, res) => {
     PostService.getPostsCount()
-      .then((response) => {
-        logger.info('successfully get post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch the post count' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.get('/:postUrl', (req, res) => {
     PostService.getPublishedPost(req.params.postUrl)
-      .then((response) => {
-        logger.info('successfully get post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to fetch the post by post url', url: req.params.postUrl }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   router.put('/:postId', (req, res) => {
     PostService.addLikeOrDislike(req.params.postId, req.body)
-      .then((response) => {
-        logger.info('Successfully updated post', response.data.postId)
-        return res.send(response.data)
+      .then(({ data }) => res.send(data))
+      .catch((error) => {
+        const customError = { message: 'Failed to update like or dislike on post', postId: req.params.postId }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
-  
-    /*
-     * .catch((error) => {
-     *   logger.error(DD600, error)
-     *   res.status(ResponseCode.INTERNAL_SERVER_ERROR).send(DD600)
-     * })
-     */
   })
   
   return router

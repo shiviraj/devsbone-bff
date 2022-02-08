@@ -15,49 +15,45 @@ const userController = () => {
           UserService.getDummyUser()
             .then(({ data }) => res.status(CUSTOM_ERRORS.UNAUTHORIZED.statusCode).send(data))
             .catch((err) => {
-              logger.error(err, 'Failed to get dummy')
-              handleError(err, res)
+              const customError = { message: 'Failed to fetch the dummy user' }
+              logger.logAPIError(req, err, customError)
+              handleError(err, res, customError)
             })
         } else {
-          logger.error(error, 'Failed to validate user')
-          handleError(error, res)
+          const customError = { message: 'Failed to validate user' }
+          logger.logAPIError(req, error, customError)
+          handleError(error, res, customError)
         }
       })
   })
   
   router.post('', (req, res) => {
     UserService.register(req.body)
-      .then((response) => {
-        logger.info('Successfully register user')
-        return res.send(response.data)
-      })
+      .then(({ data }) => res.send(data))
       .catch((error) => {
-        logger.error(DD608, error)
-        res.sendStatus(ResponseCode.BAD_REQUEST)
+        const customError = { message: 'Failed to register a new user' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
   })
   
   router.get('/logout', (req, res) => {
     UserService.logout()
-      .then((response) => {
-        logger.info('Successfully user logout')
-        return res.send(response.data)
-      })
+      .then(({ data }) => res.send(data))
       .catch((error) => {
-        logger.error(DD609, error)
-        res.status(ResponseCode.BAD_REQUEST).send(DD609)
+        const customError = { message: 'Failed to logout user' }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
   })
   
   router.get('/:userId', (req, res) => {
     UserService.getUser(req.params.userId)
-      .then((response) => {
-        logger.info('Successfully fetch all users')
-        return res.send(response.data)
-      })
+      .then(({ data }) => res.send(data))
       .catch((error) => {
-        logger.error(DD611, error)
-        res.status(ResponseCode.BAD_REQUEST).send(DD611)
+        const customError = { message: 'Failed to fetch user by userId', userId: req.params.userId }
+        logger.logAPIError(req, error, customError)
+        handleError(error, res, customError)
       })
   })
   

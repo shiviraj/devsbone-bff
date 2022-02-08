@@ -16,9 +16,7 @@ const handleError = (error, res, errorDetails) => {
   }
   
   if (isBadRequest(error)) {
-    errorDetails instanceof Array
-      ? res.status(HTTP_CODES.BAD_REQUEST).send(errorDetails)
-      : res.status(HTTP_CODES.BAD_REQUEST).send(getErrorResponse(errorDetails))
+    res.status(HTTP_CODES.BAD_REQUEST).send(getErrorResponse(errorDetails))
     return
   }
   

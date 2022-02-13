@@ -11,7 +11,7 @@ const isBadRequest = (error) => error.response && error.response.status === HTTP
 
 const handleError = (error, res, errorDetails) => {
   if (isUnauthorized(error)) {
-    res.status(CUSTOM_ERRORS.UNAUTHORIZED.statusCode).send(CUSTOM_ERRORS.UNAUTHORIZED.message)
+    res.status(CUSTOM_ERRORS.UNAUTHORIZED.statusCode).send(CUSTOM_ERRORS.UNAUTHORIZED)
     return
   }
   

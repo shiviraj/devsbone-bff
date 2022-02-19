@@ -1,6 +1,7 @@
+// eslint-disable-next-line max-classes-per-file
 class Context {
   constructor() {
-    this.context = {};
+    this.context = {}
   }
   
   get(key) {
@@ -15,12 +16,13 @@ class Context {
 class Singleton {
   constructor() {
     if (!Singleton.instance) {
-      Singleton.instance = new Context();
+      Singleton.instance = new Context()
     }
   }
   
+  // eslint-disable-next-line class-methods-use-this
   getInstance() {
-    return Singleton.instance;
+    return Singleton.instance
   }
 }
 
